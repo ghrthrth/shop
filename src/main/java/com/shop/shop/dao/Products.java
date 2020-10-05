@@ -21,4 +21,10 @@ public class Products {
     private String names;
     @Column(name = "price")
     private int price;
+
+    public Products(int id, String names, int price) {
+        this.id = id;
+        this.names = names;
+        this.price = price;
+    }
 }
