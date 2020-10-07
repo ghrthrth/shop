@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layout/layout" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
+<title>Добавление товара</title>
+<head>
+</head>
+<body>
+<th:block layout:fragment="content">
+    <div class="panel panel-default">
+        <div class="panel-heading">Добавление нового продукта</div>
+        <div class="panel-body">
+            <form method="post" class="form-group" th:action="@{/add}">
+                <div class="form-group">
+                    <label for="name">Имя товара&nbsp;</label>
+                    <input class="form-control" type="text" name="name" id="name" maxlength="2000"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="price">Цена:&nbsp;</label>
+                    <input class="form-control" type="number" name="price" id="price" maxlength="50" min="1"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="count">Кол-во&nbsp;</label>
+                    <input class="form-control" type="text" name="count" id="count" maxlength="120" min="1"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="categoryId">Выберите категорию</label>
+                    <select class="form-control" id="categoryId" name="categoryId">
+                        <option th:each="category: ${categories}"
+                                th:text="${category.getName()}"
+                                th:value="${category.getId()}">
+                        </option>
+                    </select>
+                </div>
+
+                <input class="btn btn-primary" type="submit" value="Добавить"/>
+
+            </form>
+        </div>
+        <div class="panel-footer">
+            <span class="alert alert-primary" role="alert" th:text="${message}">Статус</span>
+        </div>
+    </div>
+</th:block>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

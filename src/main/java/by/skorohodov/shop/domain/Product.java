@@ -12,6 +12,7 @@ import javax.persistence.*;
 public class Product {
 
     @Id
+    @GeneratedValue
     int id;
     String name;
     int count;

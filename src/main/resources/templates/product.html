@@ -1,31 +1,40 @@
 <!DOCTYPE HTML>
 <html layout:decorator="layout/layout" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
+<title>Главная</title>
 <head>
 </head>
 <body>
 <th:block layout:fragment="content">
-        <div class="panel panel-default">
-            <div class="panel-heading">Список товаров</div>
-            <div class="panel-body" th:each="category: ${categories}">
-                <h3 class="text-center" th:text="${category.getName()}"></h3>
-                <table class="table table-striped table-bordered table-responsive">
-                    <thead>
-                    <tr>
-                        <th>Название товара</th>
-                        <th>Цена</th>
-                        <th>Количество</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="product : ${category.getProduct()}">
-                        <td th:utext="${product.getName()}"></td>
-                        <td th:utext="${product.getPrice()}"></td>
-                        <td th:utext="${product.getCount()}"></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Список товаров</div>
+        <div class="panel-body" th:each="category: ${categories}">
+            <h3 class="text-center" th:text="${category.getName()}"></h3>
+            <table class="table table-striped table-bordered table-responsive">
+                <thead>
+                <tr>
+                    <th>Название товара</th>
+                    <th>Цена</th>
+                    <th>Количество</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="product : ${category.getProduct()}">
+                    <td th:utext="${product.getName()}"></td>
+                    <td th:utext="${product.getPrice()}"></td>
+                    <td th:utext="${product.getCount()}"></td>
+                    <td class="text-center">
+                        <form method="post">
+                            <label for="id"></label>
+                            <input class="form-control" type="hidden" name="id" id="id" th:value="${product.getId()}"/>
+                            <input type="submit" class="btn btn-outline-primary"/>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
+    </div>
 </th:block>
 </body>
 </html>
