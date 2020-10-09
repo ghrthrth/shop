@@ -15,12 +15,15 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public Product addProduct(final Product product) {
+    public Product saveProduct(final Product product) {
         productRepository.save(product);
         return product;
     }
 
     public Product getProductById(final int id){
         return productRepository.findById(id);
+    }
+    public Product deleteByCount(final Product product){
+          return productRepository.deleteByCount(product);
     }
 }

@@ -41,21 +41,26 @@ class ShopController {
     }
 
     @PostMapping
-    public String addToCart(final Model model, final @RequestParam int id) {
-        final Product product = productService.getProductById(id);
-        if (productList.isEmpty()) {
-            productList.add(product);
-        } else {
-            for (int i = 0; i <= productList.size(); i++) {
-                if (productList.get(i).getId() != product.getId()) {
-                    productList.add(product);
-                    System.out.println("ADDED!");
-                } else {
-                    System.out.println("NOT ADDED");
-                }
+    public String addToCart(final Model model, final @RequestParam int id, final @RequestParam int count) {
+        try {
+            final Product product = productService.getProductById(id);
+            if (productList.isEmpty()) {
+                product.setCount(count);
+                productList.add(product);
+            } else if (productList.stream().noneMatch(product1 -> product1.getId() == product.getId())) {
+                product.setCount(count);
+                productList.add(product);
+            } else {
+                throw new Exception("Ошибка добавления продукта");
             }
+            getCategories(model, categoryService);
+            model.addAttribute("message", "Продукт с именем : "
+                    + product.getName() + " успешно добавлен в корзину");
+        } catch (final Exception e) {
+            getCategories(model, categoryService);
+            model.addAttribute("message", "Добавление продукта в корзину с именем : "
+                    + e.getMessage() + " завершилось ошибкой");
         }
-        getCategories(model, categoryService);
         return "product";
     }
 
@@ -77,20 +82,32 @@ class ShopController {
                     .setPrice(price)
                     .setCount(count)
                     .setCategoryId(categoryId);
-            productService.addProduct(product);
+            productService.saveProduct(product);
             model.addAttribute("message", "Продукт с именем : "
                     + product.getName() + " успешно добавлен");
             getCategories(model, categoryService);
-        } catch (final Exception ex) {
+        } catch (final Exception e) {
             getCategories(model, categoryService);
             model.addAttribute("message", "Добавление продукта с именем : "
-                    + ex.getMessage() + " заверщилось ошибкой");
+                    + e.getMessage() + " завершилось ошибкой");
         }
         return "add";
     }
 
     @GetMapping("/cart")
     public String showCart(final Model model) {
+        model.addAttribute("products", productList);
         return "cart";
     }
-}
+
+    @PostMapping("/cart")
+    public String submitCart(final @RequestParam int count, final @RequestParam int id) {
+            final Product product = productService.getProductById(id);
+            productList.stream().noneMatch(product1 -> product1.getId() == product.getId());
+                productList.clear();
+                productService.deleteByCount(product.getCount(count));
+                return "cart";
+        }
+    }
+
+

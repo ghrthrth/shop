@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface ProductRepository extends CrudRepository<Product, Integer> {
 
     Product findById(final int id);
+    Product deleteByCount(Product product);
 }

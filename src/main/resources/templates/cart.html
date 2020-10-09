@@ -4,5 +4,45 @@
 <head>
 </head>
 <body>
+<th:block layout:fragment="content">
+    <div class="panel panel-default">
+        <div class="panel-heading">Список товаров</div>
+        <div class="panel-body">
+            <h3 class="text-center"></h3>
+            <table class="table table-striped table-bordered table-responsive">
+                <thead>
+                <tr>
+                    <th>Название товара</th>
+                    <th>Цена</th>
+                    <th>Количество</th>
+
+                    <th>Общая цена</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="product : ${products}">
+                    <td th:utext="${product.getName()}"></td>
+                    <td th:utext="${product.getPrice()}"></td>
+                    <form method="post">
+                        <td>
+                            <p th:utext="${product.getCount()}"></p>
+                            <label for="count"></label>
+                            <input class="form-control" type="hidden" th:value="${product.getCount()}" name="count"
+                                   id="count"/>
+                        </td>
+                        <td th:utext="${product.getCount() * product.getPrice()}"></td>
+                        <td>
+                            <label for="id"></label>
+                            <input class="form-control" type="hidden" name="id" id="id" th:value="${product.getId()}"/>
+                            <input type="submit" class="btn btn-primary" value="Заказать"/>
+                        </td>
+                    </form>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</th:block>
 </body>
 </html>

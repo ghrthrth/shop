@@ -1,5 +1,6 @@
 package by.skorohodov.shop.domain;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "product", schema = "public")
 @Getter @Setter @Accessors(chain = true)
+@EqualsAndHashCode
 public class Product {
 
     @Id
