@@ -5,6 +5,7 @@ import by.skorohodov.shop.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class ProductService {
 
@@ -15,15 +16,14 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public Product saveProduct(final Product product) {
+    public void saveProduct(final Product product) {
         productRepository.save(product);
-        return product;
     }
 
     public Product getProductById(final int id){
         return productRepository.findById(id);
     }
-    public Product deleteByCount(final Product product){
-          return productRepository.deleteByCount(product);
+    public void deleteById(final int id){
+        productRepository.delete(id);
     }
 }

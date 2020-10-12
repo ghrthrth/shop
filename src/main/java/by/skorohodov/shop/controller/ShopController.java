@@ -101,13 +101,9 @@ class ShopController {
     }
 
     @PostMapping("/cart")
-    public String submitCart(final @RequestParam int count, final @RequestParam int id) {
-            final Product product = productService.getProductById(id);
-            productList.stream().noneMatch(product1 -> product1.getId() == product.getId());
-                productList.clear();
-                productService.deleteByCount(product.getCount(count));
-                return "cart";
-        }
+    public String submitCart(final @RequestParam int id, final @RequestParam int count) {
+        productService.deleteById(id);
+        productList.clear();
+        return "cart";
     }
-
-
+}
